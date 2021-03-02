@@ -7,6 +7,7 @@ const {CONNECTION_STRING, SESSION_SECRET, SERVER_PORT} = process.env
 
 //CONTROLLERS
 const authCtrl = require('./controller/authController')
+const movieCtrl = require('./controller/movieController')
 
 //MIDDLEWARE
 app.use(express.json())
@@ -34,3 +35,7 @@ app.post('/auth/register', authCtrl.register)
 app.post('/auth/login', authCtrl.login)
 app.post('/auth/logout', authCtrl.logout)
 app.get('/auth/user', authCtrl.getUser)
+
+//MOVIE ENDPOINTS
+app.get('/api/movies', movieCtrl.getMovies)
+app.delete('/api/movies/:movie_id', movieCtrl.deleteMovie)

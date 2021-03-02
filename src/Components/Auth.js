@@ -1,5 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
+import {setUser} from '../redux/authReducer'
+import {connect} from 'react-redux'
 
 const Auth = (props) => {
   const [email, setEmail] = useState("")
@@ -7,15 +9,16 @@ const Auth = (props) => {
 
   const login = () => {
     axios.post("/auth/login", { email, password }).then((res) => {
-      console.log(res.data)
+      props.setUser(res.data)
       setEmail("")
       setPassword("")
+      props.history.push(props.location.state ? props.location.state.from : '/movies')
     })
   }
 
   const register = () => {
     axios.post("/auth/register", { email, password }).then((res) => {
-      console.log(res.data)
+      props.setUser(res.data)
       setEmail("")
       setPassword("")
     })
@@ -40,4 +43,4 @@ const Auth = (props) => {
   )
 }
 
-export default Auth
+export default connect(null, {setUser})(Auth)
